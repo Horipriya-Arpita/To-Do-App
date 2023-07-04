@@ -3,6 +3,10 @@ const path = require("path");
 const app = express();
 const mysql = require("mysql");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const cookieSecret = "arpita";
+const session = require("express-session");
+
 
 dotenv.config({ path: "./.env" });
 
@@ -17,6 +21,14 @@ const publicDirectory = path.join(__dirname, "./public");
 app.use(express.static(publicDirectory));
 app.use(express.urlencoded({ extended: "false" }));
 app.use(express.json());
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(cookieParser(cookieSecret));
 
 db.connect((error) => {
   if (error) {
@@ -26,7 +38,7 @@ db.connect((error) => {
   }
 });
 
-const port = 4000;
+const port = 7000;
 app.set("view engine", "hbs");
 
 //define routes

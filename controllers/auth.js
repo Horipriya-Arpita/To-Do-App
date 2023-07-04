@@ -54,3 +54,52 @@ exports.register = (req, res) => {
 
     //res.send("testing");
 };
+
+exports.login = (req, res) => {
+  const { email, password } = req.body;
+  
+  db.query(
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+    async (error, results) => {
+      if (error) {
+        console.log(error);
+      }
+
+      if (results.length === 0) {
+        return res.render("login", {
+          message: "Invalid email or password",
+        });
+      }
+
+      const user = results[0];
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordMatch) {
+        return res.render("login", {
+          message: "Invalid email or password",
+        });
+      }
+
+      // Generate a JSON Web Token (JWT) for authentication
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      });
+
+      // Store the token in a cookie
+      res.cookie("jwt", token, {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        signed: true,
+      });
+
+      req.session.user = {
+        id: results[0].id,
+        email: results[0].email,
+        // Add any other relevant user data to the session object
+      };
+
+      res.redirect("/dashboard");
+    }
+  );
+};
