@@ -40,6 +40,7 @@ db.connect((error) => {
 
 const port = 7000;
 app.set("view engine", "hbs");
+//app.set("views" ,"./view");
 
 //define routes
 app.use("/", require("./routes/pages"));
