@@ -1,0 +1,24 @@
+ <div class="col-6">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="floatingInput" value="{{this.task}}" placeholder="Task" name="task">
+      <label for="floatingInput">Task</label>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="form-floating mb-3">
+      <input type="date" class="form-control" id="floatingInput" value="{{this.date_added}}" placeholder="Date" name="date">
+      <label for="floatingInput">Date</label>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="form-floating mb-3">
+      <textarea class="form-control" placeholder="Leave task details here" id="task_detail" name="task_detail" style="height: 100px">{{this.task_details}}</textarea>
+      <label for="task_detail">Task Detail</label>
+    </div>
+  </div>
+
+  <div class="col-12 d-grid">
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>

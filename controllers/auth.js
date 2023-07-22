@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+let uemail;
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -99,7 +100,139 @@ exports.login = (req, res) => {
         // Add any other relevant user data to the session object
       };
 
-      res.redirect("/dashboard");
+      uemail = email;
+      console.log("uuuuu" + email);
+      res.redirect("/home");
     }
   );
+
+
 };
+
+/*router.get("/home", (req, res) => {
+  if (req.session && req.session.user) {
+    res.render("home");
+  } else {
+    res.redirect("/login");
+  }
+});
+*/
+
+exports.view = (req, res) => {
+
+  if (req.session && req.session.user) {
+    db.query('SELECT * FROM task_table WHERE email = ?',[uemail], (err, rows) => {
+      // When done with the connection, release it
+      if (!err) {
+        console.log('abar dekhi  '+ uemail)
+        res.render('home', { rows});
+      } else {
+        console.log(err);
+      }
+      console.log('The data from task table: \n', rows);
+    });
+  
+  }
+
+  else {
+    res.redirect("/login");
+  }
+ 
+}
+
+exports.form = (req, res) => {
+  res.render('add_task');
+  console.log("form er time e -> " + uemail);
+}
+
+
+exports.create = (req, res) => {
+  //res.render('add_task');
+  const { task, task_detail, date } = req.body;
+  //const uemail = req.session.email;
+  // User the connection
+  console.log('add korar time e mail -> ' + uemail);
+  db.query("INSERT INTO task_table SET ?", {task: task, task_details: task_detail, date_added: date, email: uemail }, (err, rows) => {
+    if (!err) {
+      res.render('add_task', {  alert: 'User added successfully.' });
+    } else {
+      console.log(err);
+    }
+    console.log('The data from task  table: \n', rows);
+  });
+}
+
+
+exports.edit = (req, res) => {
+  //res.render('edit_task');
+  
+  db.query('SELECT * FROM task_table WHERE Id = ?', [req.params.Id], (err, rows) => {
+    // When done with the connection, release it
+    if (!err) {
+      res.render('edit_task', { rows});
+    } else {
+      console.log(err);
+    }
+    console.log('The data from task table: \n', rows);
+  });
+
+}
+
+
+exports.update = (req, res) => {
+  
+  const { task, task_detail, date } = req.body;
+  // User the connection
+  
+  db.query('UPDATE task_table SET task = ?, task_details = ?, date_added = ? WHERE Id = ?', [task, task_detail, date, req.params.Id], (err, rows) => {
+    // When done with the connection, release it
+    if (!err) {
+      //res.render('edit_task', { rows});
+      db.query('SELECT * FROM task_table WHERE Id = ?', [req.params.Id], (err, rows) => {
+        // When done with the connection, release it
+        if (!err) {
+          res.render('edit_task', { rows, alert: `${task} has been updated.` });
+        } else {
+          console.log(err);
+        }
+        console.log('The data from task table: \n', rows);
+      });
+
+    } else {
+      console.log(err);
+    }
+    console.log('The data from task table: \n', rows);
+  });
+
+}
+
+
+exports.delete = (req, res) => {
+  //res.render('edit_task');
+  
+  db.query('DELETE FROM task_table WHERE Id = ?', [req.params.Id], (err, rows) => {
+    // When done with the connection, release it
+    if (!err) {
+      res.redirect('/');
+    } else {
+      console.log(err);
+    }
+    console.log('The data from task table: \n', rows);
+  });
+
+}
+
+
+exports.viewall = (req, res) => {
+  db.query('SELECT * FROM task_table WHERE Id = ?', [req.params.Id], (err, rows) => {
+      // When done with the connection, release it
+      if (!err) {
+        res.render('view_task', { rows});
+      } else {
+        console.log(err);
+      }
+      console.log('The data from task table: \n', rows);
+    });
+  
+}
+
