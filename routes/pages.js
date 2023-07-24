@@ -23,7 +23,9 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/home", authController.view);
+router.post("/", authController.find);
 router.get("/addtask", authController.form);
+
 router.post("/addtask", authController.create);
 
 router.get("/edittask/:Id", authController.edit);

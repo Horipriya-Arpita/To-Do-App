@@ -39,7 +39,7 @@ exports.register = (req, res) => {
       }
 
       let hashedPassword = await bcrypt.hash(password, 8);
-      console.log(hashedPassword);
+      //console.log(hashedPassword);
 
       db.query("INSERT INTO users SET ?",{ name: name, email: email, password: hashedPassword },(error, results) => {
         if (error) {
@@ -99,9 +99,7 @@ exports.login = (req, res) => {
         email: results[0].email,
         // Add any other relevant user data to the session object
       };
-
       uemail = email;
-      console.log("uuuuu" + email);
       res.redirect("/home");
     }
   );
@@ -109,27 +107,16 @@ exports.login = (req, res) => {
 
 };
 
-/*router.get("/home", (req, res) => {
-  if (req.session && req.session.user) {
-    res.render("home");
-  } else {
-    res.redirect("/login");
-  }
-});
-*/
-
 exports.view = (req, res) => {
 
   if (req.session && req.session.user) {
     db.query('SELECT * FROM task_table WHERE email = ?',[uemail], (err, rows) => {
-      // When done with the connection, release it
       if (!err) {
-        console.log('abar dekhi  '+ uemail)
         res.render('home', { rows});
       } else {
         console.log(err);
       }
-      console.log('The data from task table: \n', rows);
+      //console.log('The data from task table: \n', rows);
     });
   
   }
@@ -140,25 +127,37 @@ exports.view = (req, res) => {
  
 }
 
+exports.find = (req, res) => {
+  let searchTerm = req.body.search;
+  // User the connection
+  db.query('SELECT * FROM task_table WHERE task LIKE ? OR date_added LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    if (!err) {
+      res.render('home', { rows });
+    } else {
+      console.log(err);
+    }
+    //console.log('The data from task  table: \n', rows);
+  });
+
+}
+
 exports.form = (req, res) => {
   res.render('add_task');
-  console.log("form er time e -> " + uemail);
+  //console.log("form er time e -> " + uemail);
 }
 
 
 exports.create = (req, res) => {
-  //res.render('add_task');
+
   const { task, task_detail, date } = req.body;
-  //const uemail = req.session.email;
-  // User the connection
-  console.log('add korar time e mail -> ' + uemail);
+  
   db.query("INSERT INTO task_table SET ?", {task: task, task_details: task_detail, date_added: date, email: uemail }, (err, rows) => {
     if (!err) {
       res.render('add_task', {  alert: 'User added successfully.' });
     } else {
       console.log(err);
     }
-    console.log('The data from task  table: \n', rows);
+    //console.log('The data from task  table: \n', rows);
   });
 }
 
@@ -173,7 +172,7 @@ exports.edit = (req, res) => {
     } else {
       console.log(err);
     }
-    console.log('The data from task table: \n', rows);
+    //console.log('The data from task table: \n', rows);
   });
 
 }
@@ -195,21 +194,20 @@ exports.update = (req, res) => {
         } else {
           console.log(err);
         }
-        console.log('The data from task table: \n', rows);
+        //console.log('The data from task table: \n', rows);
       });
 
     } else {
       console.log(err);
     }
-    console.log('The data from task table: \n', rows);
+    //console.log('The data from task table: \n', rows);
   });
 
 }
 
 
 exports.delete = (req, res) => {
-  //res.render('edit_task');
-  
+
   db.query('DELETE FROM task_table WHERE Id = ?', [req.params.Id], (err, rows) => {
     // When done with the connection, release it
     if (!err) {
@@ -217,7 +215,7 @@ exports.delete = (req, res) => {
     } else {
       console.log(err);
     }
-    console.log('The data from task table: \n', rows);
+    //console.log('The data from task table: \n', rows);
   });
 
 }
@@ -231,7 +229,7 @@ exports.viewall = (req, res) => {
       } else {
         console.log(err);
       }
-      console.log('The data from task table: \n', rows);
+      //console.log('The data from task table: \n', rows);
     });
   
 }

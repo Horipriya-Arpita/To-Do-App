@@ -1,11 +1,11 @@
 body {
-    background-color: #fff;
+    background-color: 	#F0FFFF;
 }
 
 nav {
-    background-color: blueviolet;
+    background-color: #191970;
     color: #fff;
-    padding: 30px 60px;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
 }
@@ -106,3 +106,184 @@ a {
 .gender_g {
     display: flex;
 }
+
+.table_view{
+    width: 100%;
+    background-color: 	#FFF0F5;
+    border: rgb(128, 6, 6);
+    border-radius: 4px;
+    border-color: rgb(128, 6, 6);
+    border-style:groove;
+    margin-bottom: 20px;
+}
+
+.view-task{
+    background-color: antiquewhite;
+    height: 300px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.view_task_title{
+    margin-top: 20px;
+}
+
+.table_home{
+    background-color: 	#ADD8E6;
+    border-style:solid;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+
+.content_index{
+    background-color: black;
+    text-align: center;
+    text-decoration-color: #ddd;
+    color: #fff;
+    width: fit-content;
+    margin-top: 100px;
+    border-radius: 15px;
+}
+
+.my-container {
+    /* Your styles for the container element */
+    display: flex; /* Use flexbox to center the card horizontally */
+    justify-content: center; /* Center the card horizontally */
+    margin: 0 auto; /* Center the container itself if it has a fixed width */
+    max-width: 600px; /* Set a maximum width to limit the container's width */
+    padding: 0 20px; /* Add space on both sides */
+}
+
+.my-card {
+    /* Your styles for the card element */
+    padding: 20px;
+    background-color: #4747d3;
+    color: white;
+    border-radius: 8px;
+}
+
+.my-title {
+    /* Your styles for the title (h1) element */
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.my-description {
+    /* Your styles for the description (p) element */
+    font-size: 16px;
+}
+
+/*......For registration form......*/
+
+.register-container {
+    background-color: #ffe6e6; /* Light pink color */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    max-width: 50rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.register-card {
+    max-width: 50rem;
+    width: 100%;
+}
+
+.register-card-header {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #8B008B; /* Blue color for header */
+    color: white;
+    border-radius: 8px;
+}
+
+.register-card-body {
+    padding: 15px;
+}
+
+/* Your existing form control styles */
+.form-group {
+    margin-bottom: 5px;
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #8B008B; /* Blue color for button */
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Style the error message (assuming you use the "alert-danger" class) 
+.alert-danger {
+    background-color: #f8d7da; /* Light red color for error message 
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-top: 20px;
+}*/
+
+/* styles.css */
+
+.login-container {
+    background-color: #ffe6e6; /* Light pink color */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form {
+    max-width: 300px; /* Adjust the maximum width of the form */
+    width: 100%;
+    text-align: center; /* Center the form elements horizontally */
+}
+
+.login-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    background-color: #8B008B; /* Blue color for the button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Style the placeholder text in the input fields (optional) */
+.login-form input::placeholder {
+    color: #999;
+}
+
+/* Style the input fields on focus (optional) */
+.login-form input:focus {
+    outline: none;
+    border-color: #007BFF; /* Blue color on focus */
+}
+
